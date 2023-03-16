@@ -78,3 +78,8 @@ C:\Users\omerc\RiderProjects\BookStore\WebAPI\bin\Debug\net6.0\Newtonsoft.Json.d
 C:\Users\omerc\RiderProjects\BookStore\WebAPI\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
 C:\Users\omerc\RiderProjects\BookStore\WebAPI\bin\Debug\net6.0\Presentation.dll
 C:\Users\omerc\RiderProjects\BookStore\WebAPI\bin\Debug\net6.0\Presentation.pdb
+C:\Users\omerc\RiderProjects\BookStore\WebAPI\bin\Debug\net6.0\nlog.config
+C:\Users\omerc\RiderProjects\BookStore\WebAPI\bin\Debug\net6.0\NLog.dll
+C:\Users\omerc\RiderProjects\BookStore\WebAPI\bin\Debug\net6.0\NLog.Extensions.Logging.dll
+C:\Users\omerc\RiderProjects\BookStore\WebAPI\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\omerc\RiderProjects\BookStore\WebAPI\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

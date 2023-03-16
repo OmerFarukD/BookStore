@@ -12,7 +12,7 @@ public class BookRepository : RepositoryBase<Book>,IBookRepository
 
     public IQueryable<Book> GetAllBooks(bool trackChanges) => FindAll(trackChanges).OrderBy(x=>x.Id);
 
-    public Book? GetAllBookById(int id, bool trackChanges) => FindByCondition(x => x.Equals(id), trackChanges).SingleOrDefault();
+    public Book? GetAllBookById(int id, bool trackChanges) => FindByCondition(x => x.Id.Equals(id), trackChanges).SingleOrDefault();
 
     public void CreateOneBook(Book book) => Create(book);
 
