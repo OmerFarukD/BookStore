@@ -5,9 +5,9 @@ namespace Services.Abstracts;
 
 public interface IBookService
 {
-    IEnumerable<BookDto> GetAllBooks(bool trackChanges);
-    Book GetOneBookById(int id,bool trackChanges);
-    Book CreateOneBook(Book book);
-    void UpdateOneBook(int id, BookForUpdate bookForUpdate, bool trackChanges);
-    void DeleteOneBook(int id, bool trackChanges);
+    Task<IEnumerable<BookDto>> GetAllBooks(bool trackChanges);
+   Task<BookDto> GetOneBookById(int id,bool trackChanges);
+    Task<BookDto> CreateOneBook(BookDtoForInsertion book);
+    Task UpdateOneBook(int id, BookForUpdate bookForUpdate, bool trackChanges);
+    Task DeleteOneBook(int id, bool trackChanges);
 }

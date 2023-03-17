@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using NLog;
 using Services.Abstracts;
 using WebAPI.Extensions;
@@ -6,8 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(),"/nlog.config"));
 // Add services to the container.
 
-builder.Services.AddControllers(config =>
-{
+builder.Services.AddControllers(config => {
     config.RespectBrowserAcceptHeader = true;
     config.ReturnHttpNotAcceptable = true;
 })
@@ -16,6 +16,10 @@ builder.Services.AddControllers(config =>
     .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly).AddNewtonsoftJson();
 
 
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
@@ -41,8 +45,6 @@ if (app.Environment.IsProduction())
 {
     app.UseHsts();
 }
-
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

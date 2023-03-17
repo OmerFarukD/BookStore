@@ -10,5 +10,6 @@ public class MappingProfile : Profile
     {
         CreateMap<BookForUpdate, Book>().ReverseMap();
         CreateMap<BookDto, Book>().ReverseMap();
+        CreateMap<BookDtoForInsertion, Book>().ReverseMap();
     }
 }
