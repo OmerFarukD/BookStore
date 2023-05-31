@@ -1,14 +1,15 @@
 ﻿
+using System.Text.Json;
 using Entities.Dtos;
-using Entities.Exceptions;
-using Entities.Models;
-using Microsoft.AspNetCore.JsonPatch;
+using Entities.RequestFeatures;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.ActionFilters;
 using Services.Abstracts;
 
 namespace Presentation.Controllers;
 [ApiController]
 [Route("api/[controller]")]
+[ServiceFilter(typeof(LogFilterAttribute),Order = 2)]
 public class BooksController : ControllerBase
 {
     private readonly IServiceManager _serviceManager;
@@ -20,10 +21,11 @@ public class BooksController : ControllerBase
 
 
     [HttpGet("getall")]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery]BookParameters bookParameters)
     {
-        var books =await _serviceManager.BookService.GetAllBooks(false);
-            return Ok(books);
+        var pagedResult =await _serviceManager.BookService.GetAllBooks(bookParameters, false);
+        Response.Headers.Add("X-Pagination",JsonSerializer.Serialize(pagedResult.metaData));
+            return Ok(pagedResult.books);
 
     }
     
@@ -36,6 +38,8 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost]
+    [ServiceFilter(typeof(ValidationFilterAttribute))]
+  
     public async Task<IActionResult> CreateOneBook([FromBody] BookDtoForInsertion book)
     {
         if (book is null) return BadRequest();
@@ -47,12 +51,14 @@ public class BooksController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [ServiceFilter(typeof(ValidationFilterAttribute),Order = 1)]
+   
     public async Task<IActionResult> UpdateOneBook([FromRoute(Name="id")]int id,[FromBody] BookForUpdate book)
     {
        
             if (book is null) return BadRequest();
             
-            if (!ModelState.IsValid) return UnprocessableEntity(ModelState);
+          
             
             await _serviceManager.BookService.UpdateOneBook(id,book,false);
             return NoContent();

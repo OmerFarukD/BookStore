@@ -2,6 +2,7 @@
 using Entities.Dtos;
 using Entities.Exceptions;
 using Entities.Models;
+using Entities.RequestFeatures;
 using Repositories.Abstracts;
 using Services.Abstracts;
 
@@ -9,18 +10,18 @@ namespace Services.Concretes;
 public class BookManager : IBookService
 {
     private readonly IRepositoryManager _repositoryManager;
-    private readonly ILoggerService _loggerService;
     private readonly IMapper _mapper;
-
-    public BookManager(IRepositoryManager repositoryManager, ILoggerService loggerService, IMapper mapper)
+    public BookManager(IRepositoryManager repositoryManager, IMapper mapper)
     {
         _repositoryManager = repositoryManager;
-        _loggerService = loggerService;
         _mapper = mapper;
     }
-    public async Task<IEnumerable<BookDto>> GetAllBooks(bool trackChanges)
+    public async Task<(IEnumerable<BookDto>  books,MetaData metaData)> GetAllBooks(BookParameters bookParameters, bool trackChanges)
     {
-        return _mapper.Map<IEnumerable<BookDto>>(await _repositoryManager.Book.GetAllBooksAsync(trackChanges));
+        var booksWithMetaData = await _repositoryManager.Book.GetAllBooksAsync(bookParameters, trackChanges);
+        var booksDto = _mapper.Map<IEnumerable<BookDto>>(booksWithMetaData);
+        
+        return (booksDto,booksWithMetaData.MetaData);
     }
 
     public async Task<BookDto> GetOneBookById(int id, bool trackChanges)
@@ -28,8 +29,7 @@ public class BookManager : IBookService
         var entity = await _repositoryManager.Book.GetAllBookByIdAsync(id,trackChanges);
         if (entity is null)
         {
-            _loggerService.LogInfo($"Book with id: {id} could not found");
-            throw new Exception($"Book with id: {id} could not found");
+            throw new BookNotFound(id);
         }
         
         
@@ -65,8 +65,7 @@ public class BookManager : IBookService
         var entity = await _repositoryManager.Book.GetAllBookByIdAsync(id, trackChanges);
         if (entity is null)
         {
-            _loggerService.LogInfo($"Book with id: {id} could not found");
-            throw new Exception($"Book with id: {id} could not found");
+            throw new BookNotFound(id);
         }
         _repositoryManager.Book.DeleteOneBook(entity);
         await _repositoryManager.SaveAsync();
