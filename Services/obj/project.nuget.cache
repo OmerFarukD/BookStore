@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "H3W86ux3vWerb/ZiDk+uUXgy2/3T/g1wN6p1qX5NMxJVygxqIF5Q3vnbn46SaFyUwzJMZjHt4AB8u2YOgc2t/A==",
+  "dgSpecHash": "FxcGory0cC/guQZs5ax4q/ZBM7iOFVD5unx3aFQEUCrQ2BMi0/G1G2XFsrbpDyep3wmlyW3LItJ6neqBFFD7qQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\omerc\\RiderProjects\\BookStore\\Services\\Services.csproj",
   "expectedPackageFiles": [
@@ -39,6 +39,7 @@
     "C:\\Users\\omerc\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.8.0\\system.identitymodel.tokens.jwt.6.8.0.nupkg.sha512",
+    "C:\\Users\\omerc\\.nuget\\packages\\system.linq.dynamic.core\\1.2.17\\system.linq.dynamic.core.1.2.17.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\system.runtime.caching\\4.7.0\\system.runtime.caching.4.7.0.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",

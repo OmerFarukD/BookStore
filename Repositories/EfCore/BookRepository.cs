@@ -16,6 +16,8 @@ public class BookRepository : RepositoryBase<Book>,IBookRepository
     {
         var books = await FindByCondition(b=>b.Price>=bookParameters.MinPrice && b.Price<=bookParameters.MaxPrice
                 ,trackChanges)
+            .Search(bookParameters.SearchTerm)
+            .Sort(bookParameters.OrderBy)
             .OrderBy(x => x.Id).ToListAsync();
         return PagedList<Book>.ToPagedList(books,bookParameters.PageNumber,bookParameters.PageSize);
     }

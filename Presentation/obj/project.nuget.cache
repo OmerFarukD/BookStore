@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "D8+ieExqxtGyOauZSBPnBfViAu/T59P3EJ3F8opNmZ3Y0Un6Te4Bah+q8LiC67/gDli5Lkx/b4u0vVGg5c6kwQ==",
+  "dgSpecHash": "wcnPkwL70HjLjlopd/nqYrUK9t9JxFailE5mQU4qDbWBKAiLClk21D2XJjFxC3sm/HMf3/x1iuiFr3HSCsiA0g==",
   "success": true,
   "projectFilePath": "C:\\Users\\omerc\\RiderProjects\\BookStore\\Presentation\\Presentation.csproj",
   "expectedPackageFiles": [
@@ -75,6 +75,7 @@
     "C:\\Users\\omerc\\.nuget\\packages\\system.io.filesystem\\4.0.1\\system.io.filesystem.4.0.1.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\system.io.filesystem.primitives\\4.0.1\\system.io.filesystem.primitives.4.0.1.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\system.linq\\4.1.0\\system.linq.4.1.0.nupkg.sha512",
+    "C:\\Users\\omerc\\.nuget\\packages\\system.linq.dynamic.core\\1.2.17\\system.linq.dynamic.core.1.2.17.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\system.linq.expressions\\4.1.0\\system.linq.expressions.4.1.0.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\system.objectmodel\\4.0.12\\system.objectmodel.4.0.12.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\system.reflection\\4.1.0\\system.reflection.4.1.0.nupkg.sha512",
