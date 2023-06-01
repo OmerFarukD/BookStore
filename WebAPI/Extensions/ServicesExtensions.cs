@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Entities.Dtos;
+using Microsoft.EntityFrameworkCore;
 using Presentation.ActionFilters;
 using Repositories.Abstracts;
 using Repositories.EfCore;
@@ -36,5 +37,9 @@ public static class ServicesExtensions
                 builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithExposedHeaders("X-Pagination");
             });
         });
+    }
+    public static void ConfigureDataShaper(this IServiceCollection services)
+    {
+        services.AddScoped<IDataShaper<BookDto>, DataShaper<BookDto>>();
     }
 }
