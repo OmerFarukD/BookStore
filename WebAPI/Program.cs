@@ -30,6 +30,7 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.ConfigureCors();
 builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.ConfigureDataShaper();
+builder.Services.AddCustomMediaType();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

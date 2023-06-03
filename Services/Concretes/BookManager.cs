@@ -20,7 +20,7 @@ public class BookManager : IBookService
         _mapper = mapper;
         _dataShaper = dataShaper;
     }
-    public async Task<(IEnumerable<ExpandoObject> books, MetaData metaData)> GetAllBooks(BookParameters bookParameters,
+    public async Task<(IEnumerable<ShapedEntity> books, MetaData metaData)> GetAllBooks(BookParameters bookParameters,
         bool trackChanges)
     {
         if (!bookParameters.ValidPriceRange)

@@ -1,4 +1,6 @@
 ﻿using Entities.Dtos;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Presentation.ActionFilters;
 using Repositories.Abstracts;
@@ -25,7 +27,8 @@ public static class ServicesExtensions
     public static void ConfigureActionFilters(this IServiceCollection services)
     {
         services.AddScoped<ValidationFilterAttribute>();
-        services.AddScoped<LogFilterAttribute>();
+        services.AddSingleton<LogFilterAttribute>();
+        services.AddScoped<ValidateMediaTypeAttribute>();
     }
 
     public static void ConfigureCors(this IServiceCollection services)
@@ -41,5 +44,26 @@ public static class ServicesExtensions
     public static void ConfigureDataShaper(this IServiceCollection services)
     {
         services.AddScoped<IDataShaper<BookDto>, DataShaper<BookDto>>();
+    }
+
+    public static void AddCustomMediaType(this IServiceCollection services)
+    {
+        services.Configure<MvcOptions>(config =>
+        {
+            var systemTextJsonOutputFormatter = config.OutputFormatters
+                .OfType<SystemTextJsonOutputFormatter>()?.FirstOrDefault();
+            if (systemTextJsonOutputFormatter is not null)
+            {
+                systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.aib.hateoas+json");
+            }
+
+            var xmlOutputFormatter = config.OutputFormatters
+                .OfType<XmlDataContractSerializerOutputFormatter>()?.FirstOrDefault();
+
+            if (xmlOutputFormatter is not null)
+            {
+                xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.aib.hateoas+xml");
+            }
+        });
     }
 }
