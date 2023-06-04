@@ -55,6 +55,7 @@ public static class ServicesExtensions
             if (systemTextJsonOutputFormatter is not null)
             {
                 systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.aib.hateoas+json");
+                systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.aib.apiroot+json");
             }
 
             var xmlOutputFormatter = config.OutputFormatters
@@ -63,6 +64,7 @@ public static class ServicesExtensions
             if (xmlOutputFormatter is not null)
             {
                 xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.aib.hateoas+xml");
+                xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.aib.apiroot+xml");
             }
         });
     }

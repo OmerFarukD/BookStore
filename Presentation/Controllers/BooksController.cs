@@ -20,7 +20,8 @@ public class BooksController : ControllerBase
     }
 
 
-    [HttpGet("getall")]
+    [HttpHead]
+    [HttpGet("getall",Name = "GetAll")]
     [ServiceFilter(typeof(ValidateMediaTypeAttribute))]
     public async Task<IActionResult> GetAll([FromQuery]BookParameters bookParameters)
     {
@@ -44,7 +45,7 @@ public class BooksController : ControllerBase
        
     }
 
-    [HttpPost]
+    [HttpPost("createonebook",Name = "CreateOneBook")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
   
     public async Task<IActionResult> CreateOneBook([FromBody] BookDtoForInsertion book)
@@ -79,6 +80,13 @@ public class BooksController : ControllerBase
         await _serviceManager.BookService.DeleteOneBook(id,true);
             return NoContent();
 
+    }
+
+    [HttpOptions]
+    public IActionResult GetBooksOptions()
+    {
+        Response.Headers.Add("Allow","GET, PUT, POST, PATCH, DELETE, HEAD, OPTIONS");
+        return Ok();
     }
 
     /*[HttpPatch("{id:int}")]
