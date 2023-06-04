@@ -1,5 +1,6 @@
 ﻿using System.Dynamic;
 using Entities.Dtos;
+using Entities.LinkModels;
 using Entities.Models;
 using Entities.RequestFeatures;
 
@@ -7,7 +8,7 @@ namespace Services.Abstracts;
 
 public interface IBookService
 {
-    Task<(IEnumerable<ShapedEntity> books, MetaData metaData)> GetAllBooks(BookParameters bookParameters,
+    Task<(LinkResponse linkResponse, MetaData metaData)> GetAllBooks(LinkParameters linkParameters,
         bool trackChanges);
    Task<BookDto> GetOneBookById(int id,bool trackChanges);
     Task<BookDto> CreateOneBook(BookDtoForInsertion book);

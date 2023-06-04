@@ -27,6 +27,24 @@ public class BookLinks : IBookLinks
         return ReturnsShapedBooks(shapedBooks);
     }
 
+    private LinkCollectionWrapper<Entity> CreateForBooks(HttpContext httpContext,LinkCollectionWrapper<Entity> bookCollection)
+    {
+        var methodname = httpContext.GetRouteData().Values["action"]
+            .ToString()!
+            .ToLower()
+            .Contains("getall")
+            ? httpContext.GetRouteData().Values["action"].ToString()!.ToLower()
+            : httpContext.GetRouteData().Values["controller"].ToString()!.ToLower(); 
+        
+        bookCollection.Links.Add(new Link()
+        {
+            Href = $"/api/{httpContext.GetRouteData().Values["controller"].ToString().ToLower()}/{methodname}",
+           Rel = $"self",
+           Method = $"GET"
+        });
+        return bookCollection;
+    }
+
     private LinkResponse ReturnLinkedBooks(IEnumerable<BookDto> books, string fields, HttpContext httpContext, List<Entity> shapedBooks)
     {
         var bookDtoList = books.ToList();
@@ -38,6 +56,7 @@ public class BookLinks : IBookLinks
         }
 
         var bookCollection = new LinkCollectionWrapper<Entity>(shapedBooks);
+        CreateForBooks(httpContext, bookCollection);
         return new LinkResponse() { Haslinks = true, LinkedEntities = bookCollection, ShappedEntities = shapedBooks };
     }
 
@@ -45,8 +64,19 @@ public class BookLinks : IBookLinks
     {
         var links = new List<Link>()
         {
-            new Link("a1","b1","c1"),
-            new Link("a2","b2","c2"),
+            new Link()
+            {
+                Href = $"/api/{httpContext.GetRouteData().Values["controller"].ToString().ToLower()}" +
+                       $"/{bookDto.Id}",
+                Rel = $"self",
+                Method = $"GET"
+            },
+            new Link()
+            {
+                Href = $"/api/{httpContext.GetRouteData().Values["controller"].ToString().ToLower()}",
+                Rel = $"create",
+                Method = $"GET"
+            }
         };
         return links;
     }

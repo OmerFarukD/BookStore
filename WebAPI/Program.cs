@@ -2,19 +2,22 @@ using Microsoft.AspNetCore.Mvc;
 using NLog;
 using Presentation.ActionFilters;
 using Services.Abstracts;
+using Services.Concretes;
 using WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(),"/nlog.config"));
 // Add services to the container.
 
-builder.Services.AddControllers(config => {
-    config.RespectBrowserAcceptHeader = true;
-    config.ReturnHttpNotAcceptable = true;
-})
-   // .AddCustomCsvFormatter()
-  //  .AddXmlDataContractSerializerFormatters()
-    .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly).AddNewtonsoftJson();
+builder.Services.AddControllers(config =>
+    {
+        config.RespectBrowserAcceptHeader = true;
+        config.ReturnHttpNotAcceptable = true;
+    })
+    .AddXmlDataContractSerializerFormatters()
+    .AddCustomCsvFormatter()
+    .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
+    //.AddNewtonsoftJson();
 
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -31,6 +34,7 @@ builder.Services.ConfigureCors();
 builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.ConfigureDataShaper();
 builder.Services.AddCustomMediaType();
+builder.Services.AddScoped<IBookLinks, BookLinks>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

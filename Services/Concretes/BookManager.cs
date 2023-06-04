@@ -2,6 +2,7 @@
 using AutoMapper;
 using Entities.Dtos;
 using Entities.Exceptions;
+using Entities.LinkModels;
 using Entities.Models;
 using Entities.RequestFeatures;
 using Repositories.Abstracts;
@@ -12,27 +13,29 @@ public class BookManager : IBookService
 {
     private readonly IRepositoryManager _repositoryManager;
     private readonly IMapper _mapper;
-    private readonly IDataShaper<BookDto> _dataShaper;
-    
-    public BookManager(IRepositoryManager repositoryManager, IMapper mapper,IDataShaper<BookDto> dataShaper)
+    private readonly IBookLinks _bookLinks;
+
+    public BookManager(IRepositoryManager repositoryManager, IMapper mapper, IBookLinks bookLinks)
     {
         _repositoryManager = repositoryManager;
         _mapper = mapper;
-        _dataShaper = dataShaper;
+        _bookLinks = bookLinks;
     }
-    public async Task<(IEnumerable<ShapedEntity> books, MetaData metaData)> GetAllBooks(BookParameters bookParameters,
+
+    public async Task<(LinkResponse linkResponse , MetaData metaData)> GetAllBooks(LinkParameters linkParameters,
         bool trackChanges)
     {
-        if (!bookParameters.ValidPriceRange)
+        if (!linkParameters.BookParameters.ValidPriceRange)
         {
             throw new PriceOutOfRangeException();
         }
         
         
-        var booksWithMetaData = await _repositoryManager.Book.GetAllBooksAsync(bookParameters, trackChanges);
+        var booksWithMetaData = await _repositoryManager.Book.GetAllBooksAsync(linkParameters.BookParameters, trackChanges);
         var booksDto = _mapper.Map<IEnumerable<BookDto>>(booksWithMetaData);
-        var shapedData = _dataShaper.ShapeData(booksDto,bookParameters.Fields);
-        return (shapedData,booksWithMetaData.MetaData);
+        var links = _bookLinks.TryGenerateLinks(booksDto, linkParameters.BookParameters.Fields,
+            linkParameters.HttpContext);
+        return (links,booksWithMetaData.MetaData);
     }
 
     public async Task<BookDto> GetOneBookById(int id, bool trackChanges)
