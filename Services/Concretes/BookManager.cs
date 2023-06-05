@@ -84,4 +84,11 @@ public class BookManager : IBookService
         _repositoryManager.Book.DeleteOneBook(entity);
         await _repositoryManager.SaveAsync();
     }
+
+    public async Task<List<BookDto>> GetAllBooks(bool trackChanges)
+    {
+        var books = await _repositoryManager.Book.GetAllBooksAsync(trackChanges);
+        var data = _mapper.Map<List<BookDto>>(books);
+        return data;
+    }
 }

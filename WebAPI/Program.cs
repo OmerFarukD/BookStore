@@ -37,7 +37,7 @@ builder.Services.AddCustomMediaType();
 builder.Services.AddScoped<IBookLinks, BookLinks>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.ConfigureVersioning();
 var app = builder.Build();
 
 var logger = app.Services.GetRequiredService<ILoggerService>();

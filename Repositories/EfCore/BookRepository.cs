@@ -21,6 +21,13 @@ public class BookRepository : RepositoryBase<Book>,IBookRepository
             .OrderBy(x => x.Id).ToListAsync();
         return PagedList<Book>.ToPagedList(books,bookParameters.PageNumber,bookParameters.PageSize);
     }
+
+    public async Task<IEnumerable<Book>> GetAllBooksAsync(bool trackChanges)
+    {
+        var books = await _context.Books.ToListAsync();
+        return books;
+    }
+
     public async Task<Book?> GetAllBookByIdAsync(int id, bool trackChanges) =>await FindByCondition(x => x.Id.Equals(id), trackChanges).SingleOrDefaultAsync();
 
     public void CreateOneBook(Book book) => Create(book);
