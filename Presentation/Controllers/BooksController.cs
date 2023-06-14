@@ -9,7 +9,6 @@ using Services.Abstracts;
 
 namespace Presentation.Controllers;
 [ApiController]
-[ApiVersion("1.0")]
 [Route("api/[controller]")]
 [ServiceFilter(typeof(LogFilterAttribute),Order = 2)]
 [HttpCacheExpiration(CacheLocation = CacheLocation.Public,MaxAge = 80)]

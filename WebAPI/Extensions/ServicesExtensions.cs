@@ -1,4 +1,5 @@
-﻿using Entities.Dtos;
+﻿using AspNetCoreRateLimit;
+using Entities.Dtos;
 using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -91,4 +92,25 @@ public static class ServicesExtensions
             opt.MaxAge = 70;
             opt.CacheLocation = CacheLocation.Private;
         });
+
+    public static void ConfigureRateLimitingOptions(this IServiceCollection services)
+    {
+        var ratelimtRules = new List<RateLimitRule>()
+        {
+            new RateLimitRule()
+            {
+                Endpoint = "*",
+                Limit = 3,
+                Period = "1m"
+            }
+        };
+        services.Configure<IpRateLimitOptions>(opt =>
+        {
+            opt.GeneralRules = ratelimtRules;
+        });
+        services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+        services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>();
+        services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+        services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+    }
 }

@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "s5zGEUGMJ4ybSqyL8aASJ2ut4Z2TBfw1bZ6aPCRdtyjOM1X8qSiRmxUA5ELmxKCM/ixm3/4QyCX0qLZJI9+b1g==",
+  "dgSpecHash": "5wBlKCNjFj//CLIwBTDRMIMSAYiirE2U7mRqafbDd+xeZ0ZgcCniiyVZHKmPbruKa89IUyI2W/5EQ2JARcFuZg==",
   "success": true,
   "projectFilePath": "C:\\Users\\omerc\\RiderProjects\\BookStore\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\omerc\\.nuget\\packages\\aspnetcoreratelimit\\4.0.1\\aspnetcoreratelimit.4.0.1.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

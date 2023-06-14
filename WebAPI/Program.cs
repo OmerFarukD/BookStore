@@ -1,3 +1,5 @@
+using System.Reflection;
+using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using Presentation.ActionFilters;
@@ -33,7 +35,7 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureActionFilters();
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.ConfigureCors();
 builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.ConfigureDataShaper();
@@ -44,6 +46,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureVersioning();
 builder.Services.ConfigureResponseCaching();
 builder.Services.ConfigureHttpCacheHeaders();
+builder.Services.AddMemoryCache();
+builder.Services.ConfigureRateLimitingOptions();
+builder.Services.AddHttpContextAccessor();
+
 var app = builder.Build();
 
 var logger = app.Services.GetRequiredService<ILoggerService>();
@@ -60,6 +66,7 @@ if (app.Environment.IsProduction())
 {
     app.UseHsts();
 }
+app.UseIpRateLimiting();
 app.UseHttpsRedirection();
 app.UseCors("CorsPolicy");
 app.UseResponseCaching();
