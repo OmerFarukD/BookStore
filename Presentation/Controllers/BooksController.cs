@@ -2,6 +2,7 @@
 using System.Text.Json;
 using Entities.Dtos;
 using Entities.RequestFeatures;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ActionFilters;
 using Services.Abstracts;
@@ -11,6 +12,7 @@ namespace Presentation.Controllers;
 [ApiVersion("1.0")]
 [Route("api/[controller]")]
 [ServiceFilter(typeof(LogFilterAttribute),Order = 2)]
+[HttpCacheExpiration(CacheLocation = CacheLocation.Public,MaxAge = 80)]
 public class BooksController : ControllerBase
 {
     private readonly IServiceManager _serviceManager;
@@ -24,6 +26,7 @@ public class BooksController : ControllerBase
     [HttpHead]
     [HttpGet("getall",Name = "GetAll")]
     [ServiceFilter(typeof(ValidateMediaTypeAttribute))]
+  //  [ResponseCache(Duration = 60)]
     public async Task<IActionResult> GetAll([FromQuery]BookParameters bookParameters)
     {
 

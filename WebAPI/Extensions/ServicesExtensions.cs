@@ -1,4 +1,5 @@
 ﻿using Entities.Dtos;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -80,4 +81,14 @@ public static class ServicesExtensions
             opt.ApiVersionReader = new HeaderApiVersionReader("api-version");
         });
     }
+
+    public static void ConfigureResponseCaching(this IServiceCollection service) =>
+        service.AddResponseCaching();
+
+    public static void ConfigureHttpCacheHeaders(this IServiceCollection serviceCollection) =>
+        serviceCollection.AddHttpCacheHeaders(opt =>
+        {
+            opt.MaxAge = 70;
+            opt.CacheLocation = CacheLocation.Private;
+        });
 }

@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "C+OXwIZ0NdoDvYeKlZr3nscORQ/5Mw0gRJnuHDa9DPILwhcFcQq4GGZWP//FnGrzN8bmQmS9okPBaxoBI8C4sw==",
+  "dgSpecHash": "za+wMzPV7KDfTqKZmSFxRoxcWUwsr4XSlWaBcgKItWwkKZoj6Ljhi6XmmsenPjuh6ktSqWhbPUpLBgoW0SqDFw==",
   "success": true,
   "projectFilePath": "C:\\Users\\omerc\\RiderProjects\\BookStore\\Presentation\\Presentation.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\omerc\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
+    "C:\\Users\\omerc\\.nuget\\packages\\marvin.cache.headers\\6.0.0\\marvin.cache.headers.6.0.0.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
     "C:\\Users\\omerc\\.nuget\\packages\\microsoft.aspnetcore.authorization\\2.2.0\\microsoft.aspnetcore.authorization.2.2.0.nupkg.sha512",
