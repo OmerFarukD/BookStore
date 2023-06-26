@@ -3,6 +3,7 @@ using System.Text.Json;
 using Entities.Dtos;
 using Entities.RequestFeatures;
 using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ActionFilters;
 using Services.Abstracts;
@@ -26,6 +27,7 @@ public class BooksController : ControllerBase
     [HttpGet("getall",Name = "GetAll")]
     [ServiceFilter(typeof(ValidateMediaTypeAttribute))]
   //  [ResponseCache(Duration = 60)]
+    [Authorize(Roles = "User, Admin, Editor")]
     public async Task<IActionResult> GetAll([FromQuery]BookParameters bookParameters)
     {
 
@@ -41,6 +43,7 @@ public class BooksController : ControllerBase
     }
     
     [HttpGet("{id:int}")]
+    [Authorize(Roles = "User, Admin, Editor")]
     public async Task<IActionResult> GetOneBook([FromRoute(Name = "id")] int id)
     {
         var book = await _serviceManager.BookService.GetOneBookById(id, false);
@@ -50,7 +53,7 @@ public class BooksController : ControllerBase
 
     [HttpPost("createonebook",Name = "CreateOneBook")]
     [ServiceFilter(typeof(ValidationFilterAttribute))]
-  
+    [Authorize(Roles = "Admin, Editor")]
     public async Task<IActionResult> CreateOneBook([FromBody] BookDtoForInsertion book)
     {
         if (book is null) return BadRequest();
@@ -63,7 +66,7 @@ public class BooksController : ControllerBase
 
     [HttpPut("{id:int}")]
     [ServiceFilter(typeof(ValidationFilterAttribute),Order = 1)]
-   
+    [Authorize(Roles = "Admin, Editor")]
     public async Task<IActionResult> UpdateOneBook([FromRoute(Name="id")]int id,[FromBody] BookForUpdate book)
     {
        
@@ -78,6 +81,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Admin, Editor")]
     public async Task<IActionResult> DeleteOneBook([FromRoute(Name = "id")] int id)
     {
         await _serviceManager.BookService.DeleteOneBook(id,true);
@@ -86,6 +90,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpOptions]
+    [Authorize(Roles = "Admin, Editor, User")]
     public IActionResult GetBooksOptions()
     {
         Response.Headers.Add("Allow","GET, PUT, POST, PATCH, DELETE, HEAD, OPTIONS");
