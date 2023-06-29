@@ -9,7 +9,7 @@ using Repositories.Abstracts;
 using Services.Abstracts;
 
 namespace Services.Concretes;
-public class BookManager : IBookService
+public sealed class BookManager : IBookService
 {
     private readonly IRepositoryManager _repositoryManager;
     private readonly IMapper _mapper;
@@ -90,5 +90,10 @@ public class BookManager : IBookService
         var books = await _repositoryManager.Book.GetAllBooksAsync(trackChanges);
         var data = _mapper.Map<List<BookDto>>(books);
         return data;
+    }
+
+    public async Task<IEnumerable<Book>> GetAllBooksWithDetailsAsync(bool trackChanges)
+    {
+        return await _repositoryManager.Book.GetAllBooksWithDetailsAsync(trackChanges);
     }
 }

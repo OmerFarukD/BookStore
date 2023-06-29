@@ -10,23 +10,18 @@ namespace Services.Concretes;
 public class ServiceManager : IServiceManager
 {
     
-    private readonly Lazy<IBookService> _bookService;
-    private readonly Lazy<IAuthenticationService> _authenticationService;
+    private readonly IBookService _bookService;
+    private readonly IAuthenticationService _authenticationService;
+    private readonly ICategoryService _categoryService;
 
-
-    public ServiceManager(IRepositoryManager manager,
-        IMapper mapper,
-        IBookLinks bookLinks,
-        UserManager<User> userManager,
-        ILoggerService loggerService,
-        IConfiguration configuration
-        )
+    public ServiceManager(IBookService bookService, IAuthenticationService authenticationService, ICategoryService categoryService)
     {
-        _authenticationService = new Lazy<IAuthenticationService>(() => 
-            new AuthenticationManager(loggerService,mapper,userManager,configuration));
-        _bookService = new Lazy<IBookService>(() => new BookManager(manager,mapper,bookLinks));
+        _bookService = bookService;
+        _authenticationService = authenticationService;
+        _categoryService = categoryService;
     }
 
-    public IBookService BookService => _bookService.Value;
-    public IAuthenticationService AuthenticationService => _authenticationService.Value;
+    public IBookService BookService => _bookService;
+    public IAuthenticationService AuthenticationService => _authenticationService;
+    public ICategoryService CategoryService => _categoryService;
 }

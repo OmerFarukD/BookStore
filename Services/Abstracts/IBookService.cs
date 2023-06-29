@@ -15,4 +15,5 @@ public interface IBookService
     Task UpdateOneBook(int id, BookForUpdate bookForUpdate, bool trackChanges);
     Task DeleteOneBook(int id, bool trackChanges);
     Task<List<BookDto>> GetAllBooks(bool trackChanges);
+    Task<IEnumerable<Book>> GetAllBooksWithDetailsAsync(bool trackChanges);
 }

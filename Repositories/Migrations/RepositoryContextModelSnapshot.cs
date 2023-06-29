@@ -30,6 +30,12 @@ namespace Repositories.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CategoryId1")
+                        .HasColumnType("int");
+
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
@@ -38,20 +44,55 @@ namespace Repositories.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("CategoryId1");
+
                     b.ToTable("Books");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            CategoryId = 1,
                             Price = 40.0,
                             Title = "Annunakiler"
                         },
                         new
                         {
                             Id = 2,
+                            CategoryId = 2,
                             Price = 40.0,
                             Title = "Planet X"
+                        });
+                });
+
+            modelBuilder.Entity("Entities.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            CategoryName = "Bilgisyar Bilimleri"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            CategoryName = "Network"
                         });
                 });
 
@@ -161,22 +202,22 @@ namespace Repositories.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d5214c2b-ab49-4f81-8219-b4002a145ef6",
-                            ConcurrencyStamp = "b973674e-f6b1-4c0c-b150-d0c020f54b25",
+                            Id = "e27a0c1a-1663-4dd3-896b-48ecc8af71c3",
+                            ConcurrencyStamp = "75715f70-8522-44b7-9942-4e81a02038c1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "221cbc12-16e9-44b5-8778-4f797a061e97",
-                            ConcurrencyStamp = "21d65709-4162-434e-8797-575e0cded5f7",
+                            Id = "2a4522f7-05ba-481d-aeec-766a2deb728b",
+                            ConcurrencyStamp = "e65d823f-d4e5-41e6-beba-b6942019d21b",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "5566f813-c264-4324-8d2c-a6f124fe1b70",
-                            ConcurrencyStamp = "52d7b786-0c24-4787-9ba9-82ff69ec05c8",
+                            Id = "cbbe1cec-4dff-4c4d-9f67-3f90a73c7cb9",
+                            ConcurrencyStamp = "6bba3d6a-a536-4907-8ae9-63e8886791bc",
                             Name = "Editor",
                             NormalizedName = "EDITOR"
                         });
@@ -288,6 +329,21 @@ namespace Repositories.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Entities.Models.Book", b =>
+                {
+                    b.HasOne("Entities.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Models.Category", null)
+                        .WithMany("Books")
+                        .HasForeignKey("CategoryId1");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -337,6 +393,11 @@ namespace Repositories.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Entities.Models.Category", b =>
+                {
+                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

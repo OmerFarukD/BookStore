@@ -2,6 +2,7 @@
 using Entities.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Repositories.EfCore.Config;
 
 namespace Repositories.EfCore;
@@ -20,4 +21,5 @@ public class RepositoryContext : IdentityDbContext<User>
     }
 
     public DbSet<Book> Books { get; set; }
+    public DbSet<Category> Categories { get; set; }
 }

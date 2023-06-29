@@ -13,6 +13,7 @@ namespace Presentation.Controllers;
 [Route("api/[controller]")]
 [ServiceFilter(typeof(LogFilterAttribute),Order = 2)]
 [HttpCacheExpiration(CacheLocation = CacheLocation.Public,MaxAge = 80)]
+[ApiExplorerSettings(GroupName = "v1")]
 public class BooksController : ControllerBase
 {
     private readonly IServiceManager _serviceManager;
@@ -22,6 +23,13 @@ public class BooksController : ControllerBase
         _serviceManager = serviceManager;
     }
 
+    [Authorize]
+    [HttpGet("detail")]
+    public async Task<IActionResult> GetAllDetailsAsync()
+    {
+        var data = _serviceManager.BookService.GetAllBooksWithDetailsAsync(false);
+        return Ok(data);
+    }
 
     [HttpHead]
     [HttpGet("getall",Name = "GetAll")]

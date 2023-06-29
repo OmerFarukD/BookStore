@@ -12,4 +12,6 @@ public interface IBookRepository : IRepositoryBase<Book>
     void CreateOneBook(Book book);
     void DeleteOneBook(Book book);
     void UpdateOneBook(Book book);
+
+    Task<IEnumerable<Book>> GetAllBooksWithDetailsAsync(bool trackChanges);
 }

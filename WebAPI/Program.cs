@@ -22,8 +22,11 @@ builder.Services.AddControllers(config =>
     })
     .AddXmlDataContractSerializerFormatters()
     .AddCustomCsvFormatter()
-    .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
-    //.AddNewtonsoftJson();
+    .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly)
+    .AddNewtonsoftJson(/*opt =>
+    {
+        opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    })*/);
 
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -34,6 +37,8 @@ builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureLoggerService();
+builder.Services.RegisterRepositories();
+builder.Services.RegisterServices();
 builder.Services.ConfigureActionFilters();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.ConfigureCors();
@@ -52,6 +57,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);
+builder.Services.ConfigureSwagger();
+
 var app = builder.Build();
 
 var logger = app.Services.GetRequiredService<ILoggerService>();
@@ -61,7 +68,11 @@ app.ConfigureExceptionHandler(logger);
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(s =>
+    {
+        s.SwaggerEndpoint("/swagger/v1/swagger.json","Book Store");
+        s.SwaggerEndpoint("/swagger/v2/swagger.json","Book Store");
+    });
 }
 
 if (app.Environment.IsProduction())

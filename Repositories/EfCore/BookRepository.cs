@@ -5,7 +5,7 @@ using Repositories.Abstracts;
 
 namespace Repositories.EfCore;
 
-public class BookRepository : RepositoryBase<Book>,IBookRepository
+public sealed class BookRepository : RepositoryBase<Book>,IBookRepository
 {
     public BookRepository(RepositoryContext context) : base(context)
     {
@@ -36,4 +36,10 @@ public class BookRepository : RepositoryBase<Book>,IBookRepository
 
 
     public void UpdateOneBook(Book book) => Update(book);
+    public async Task<IEnumerable<Book>> GetAllBooksWithDetailsAsync(bool trackChanges)
+    {
+        return await _context.Books.Include(b => b.Category)
+            .OrderBy(b => b.Id)
+            .ToListAsync();
+    }
 }
